@@ -2,7 +2,12 @@
 
 import http, { IncomingMessage, Server, ServerResponse } from 'http'
 import config from "./config"
+import addRoutes from './helpers/RouteHandler';
 
+
+addRoutes("Get",'/', (req,res)=>{
+
+})
 
  const server:Server=http.createServer((req:IncomingMessage,res:ServerResponse)=>{
   console.log(`server is running `);
