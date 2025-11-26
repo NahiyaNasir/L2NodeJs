@@ -8,10 +8,6 @@
     "name": "Mezba Bhai"
   },
   {
-    "id": 3,
-    "name": "Sajid Bhai"
-  },
-  {
     "id": 4,
     "name": "Farhan Bhai"
   },
