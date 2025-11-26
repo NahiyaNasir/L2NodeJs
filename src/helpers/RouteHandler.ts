@@ -11,8 +11,8 @@ import { IncomingMessage, ServerResponse } from "http";
 
 
 //     | Part                       | Meaning                                           |
-// | -------------------------- | ------------------------------------------------- |
-// | `RouteHandler`             | defines the type of a route handler function      |
-// | `routes`                   | a map storing all routes, grouped by HTTP method  |
-// | `addRoutes`                | function to add a route into the map              |
-// | `export default addRoutes` | allows importing this function as the main export |
+//| -------------------------- | ------------------------------------------------- |
+//? | `RouteHandler`             | defines the type of a route handler function      |
+//? | `routes`                   | a map storing all routes, grouped by HTTP method  |
+//? | `addRoutes`                | function to add a route into the map              |
+//? | `export default addRoutes` | allows importing this function as the main export |

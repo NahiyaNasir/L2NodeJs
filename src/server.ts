@@ -1,27 +1,36 @@
+import http, { IncomingMessage, Server, ServerResponse } from "http";
+import config from "./config";
+import findDynamicRoute from "./helpers/dynamicRoutes";
+import { RouteHandler, routes } from "./helpers/RouteHandler";
+import "./routes";
+const server: Server = http.createServer(
+  (req: IncomingMessage, res: ServerResponse) => {
+    const method = req.method?.toUpperCase() || "";
+    const path = req.url || "";
 
+    const methodMap = routes.get(method);
+    const handler: RouteHandler | undefined = methodMap?.get(path);
 
-import http, { IncomingMessage, Server, ServerResponse } from 'http'
-import config from "./config"
-import addRoutes from './helpers/RouteHandler';
-
-
-addRoutes("Get",'/', (req,res)=>{
-
-})
-
- const server:Server=http.createServer((req:IncomingMessage,res:ServerResponse)=>{
-  console.log(`server is running `);
-  if(req.url == '/' && req.method=='GET'){
-     res.writeHead(200,{'content-type':'application/json'
-       }  );
-     res.end(
+    if (handler) {
+      handler(req, res);
+     }
+     else if (findDynamicRoute(method, path)) {
+      const match = findDynamicRoute(method, path);
+      (req as any).params = match?.params;
+      match?.handler(req, res);
+    } 
+    else {
+      res.writeHead(404, { "content-type": "application/json" });
+      res.end(
         JSON.stringify({
-            message:' hello nodejs from typescript',
-            path:req.url,
+          success: false,
+          message: "Route not found!!!",
+          path,
         })
-     )
+      );
+    }
   }
-   })
-    server.listen(config.port,()=>{
-            console.log(`server is running on ${config.port}`);
-    })
+);
+server.listen(config.port, () => {
+  console.log(`server is running on ${config.port}`);
+});
